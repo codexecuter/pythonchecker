@@ -49,7 +49,7 @@ Destek için kanalahu@gmail.com adresine e-posta gönderin veya Discord kanalım
 - Hizlandirilmis Calisma ( Az Kod Cok Islev )
 - CMD Ekraninda kolay kullanim
 - Acik kaynak kodlu gelistirilmeye acik.
-
+- Rastgele Adres Uretiyor.
 
 ## HATALAR VE COZUMLERI
 
