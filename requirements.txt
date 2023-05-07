@@ -1,4 +1,7 @@
 os
+pystyle
+termcolor
+mysql.connector
 webbrowser
 winreg
 psutil
@@ -10,6 +13,3 @@ urllib.request
 time
 urllib
 mysql
-mysql.connector
-pystyle
-termcolor
