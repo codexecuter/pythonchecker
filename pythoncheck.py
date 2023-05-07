@@ -18,7 +18,7 @@ yeni_baslik = "Excode :)"
 
 
 
-url = "https://raw.githubusercontent.com/codexecuter/python-check/main/pythoncheck.py"
+url = "https://raw.githubusercontent.com/codexecuter/pythonchecker/main/pythoncheck.py"
 filename = "pythoncheck.py"
 
 def check_file():
@@ -90,7 +90,7 @@ urllist= []
     
 while True:
     
-    url = "https://github.com/codexecuter/python-check/blob/main/"
+    url = "https://github.com/codexecuter/pythonchecker/blob/main/"
     if url in urllist:
         pass
     else:
