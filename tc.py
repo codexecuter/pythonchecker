@@ -1,53 +1,42 @@
 import mysql.connector
 
-# Veritabanı bağlantısı için gerekli bilgileri girin
-mydb = mysql.connector.connect(
+
+db = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
     database="101m"
 )
 
-# Cursor oluştur
-mycursor = mydb.cursor()
 
-# Kullanıcıdan girdileri al
-tc = input("TC: ")
-il = input("İl (Boş bırakabilirsiniz): ")
+if db.is_connected():
+    print("Veritabanına başarıyla bağlandı.")
 
-# Verilerin yazılacağı dosyanın adını oluştur
-dosya_adi = tc + ".txt"
+tc = input("Lütfen TC kimlik numarasını girin: ")
 
-# Verileri veritabanında ara ve dosyaya yaz
-try:
-    # İsim, soyisim ve il ile eşleşen tüm kayıtları seç
-    if tc:
-        sql = f"SELECT * FROM 101m WHERE TC = '{tc}'"
 
-    # Sorguyu çalıştır
-    mycursor.execute(sql)
+cursor = db.cursor()
+cursor.execute(f"SELECT * FROM 101m WHERE TC = '{tc}'")
+result = cursor.fetchone()
 
-    # Sonuçları dosyaya yaz
-    with open(dosya_adi, "w", encoding="utf-8") as dosya:
-        for kayit in mycursor:
-            tc = kayit[1]
-            adi = kayit[2]
-            soyadi = kayit[3]
-            baba_adi = kayit[6]
-            ana_adi = kayit[5]
-            dogum_tarihi = kayit[4]
-            nufus_il = kayit[7]
-            nufus_ilce = kayit[8]   
-            uyruk = kayit[9]
-            
-            dosya.write(f"TC:{tc}, ADI:{adi}, SOYADI:{soyadi}, BABAADI:{uyruk}, ANAADI:{nufus_il}, "
-                        f"DOGUMTARIHI:{dogum_tarihi}, NUFUSIL:{ana_adi}, NUFUSILCE:{baba_adi}, ANATC:{nufus_ilce}\n")
-            print(f"TC:{tc}, ADI:{adi}, SOYADI:{soyadi}, BABAADI:{uyruk}, ANAADI:{nufus_il}, "
-                        f"DOGUMTARIHI:{dogum_tarihi}, NUFUSIL:{ana_adi}, NUFUSILCE:{baba_adi}, ANATC:{nufus_ilce}\n")    
 
-    print(f"Veriler {dosya_adi} dosyasına kaydedildi.")
-    
-except mysql.connector.errors.ProgrammingError:
-    print("Hata: Geçersiz sorgu.")
-except Exception as e:
-    print("Hata:", e)
+with open("sonuc.txt", "a", encoding="utf-8") as f:
+    if result:
+        adi = result[2]
+        soyadi = result[3]
+        dogum_tarihi = result[4]
+        nufus_yeri = result[5]
+        ilce = result[6]
+        anne_adi = result[7]
+        anne_tc = result[8]
+        baba_adi = result[9]
+        baba_tc = result[10]
+        uyruk = result[11]
+        f.write(f"Kendi: TC : {tc} ADI : {adi}  SOYADI : {soyadi} DOGUM TARIHI: {dogum_tarihi} NUFUSU: {nufus_yeri} ILCESI: {ilce} Annesi: {anne_adi} Annesinin TCsi: {anne_tc} Babasi: {baba_adi} Babasinin TCsi: {baba_tc} UYRUGU: {uyruk}\n")
+        print(f"Kendi: TC : {tc} ADI : {adi}  SOYADI : {soyadi} DOGUM TARIHI: {dogum_tarihi} NUFUSU: {nufus_yeri} ILCESI: {ilce} Annesi: {anne_adi} Annesinin TCsi: {anne_tc} Babasi: {baba_adi} Babasinin TCsi: {baba_tc} UYRUGU: {uyruk}")
+    else:
+        f.write(f"{tc} için sonuç bulunamadı.\n")
+        print(f"{tc} için sonuç bulunamadı.")
+
+# Bağlantıyı kapat
+db.close()
