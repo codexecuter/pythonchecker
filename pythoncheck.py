@@ -95,6 +95,7 @@ while True:
         pass
     else:
         consoleclear()
+        print(stage(f"Menu Dahilinde yeni .py dosyalari eklendi tekrardan githubdan indirin.", "x"))
         print(stage(f"1 - Ad Soyad Sorgu", "!"))
         print(stage(f"2 - GSM Sorgu", "!"))
         print(stage(f"3 - TC Sorgu", "!"))
